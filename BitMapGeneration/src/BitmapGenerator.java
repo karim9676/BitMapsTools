@@ -17,7 +17,7 @@ public class BitmapGenerator {
 	    String path = "../fonts/" + fileName + ".ttf";
 	    return path;
     }	
-    public static String generateBitmapBase64Json(String text, String fontFile, int size) {
+    public static String generateBitmapBase64Json(String text, String fontFile, int width,int hight) {
     
     	String  ret="";
 	String fontFilePath= getFontPath(fontFile);
@@ -27,7 +27,7 @@ public class BitmapGenerator {
 
 	try {
 	    // Load font from file
-	 Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontFilePath)).deriveFont(Font.PLAIN, size);
+	 Font font = Font.createFont(Font.TRUETYPE_FONT, new 		File(fontFilePath)).deriveFont(Font.PLAIN, width);
 
 	// Create a dummy image to calculate text dimensions
 	BufferedImage dummyImage = new BufferedImage(1, 1, BufferedImage.TYPE_BYTE_BINARY);
@@ -38,8 +38,8 @@ public class BitmapGenerator {
 	int textHeight = metrics.getHeight();
 
 	// Force width to 8 pixels per character and height to 16 pixels
-	int bitmapWidth = Math.max(8, textWidth);
-	int bitmapHeight = Math.max(16, textHeight);
+	int bitmapWidth = Math.max(width, textWidth);
+	int bitmapHeight = Math.max(hight, textHeight);
 
 	// Scale down the font if text height is too large
 	if (textHeight > bitmapHeight) {
@@ -68,7 +68,7 @@ public class BitmapGenerator {
 		for (int x = 0; x < bitmapWidth; x++) {
 			int pixel = image.getRGB(x, y) == -16777216 ? 0 : 1; 
 			// Black = 0, White = 1
-			row = (row << 1) | pixel;
+			row = (row << 1) | pixel;  
 			rowPrint.append(pixel == 1 ? "1" : "0"); 
 			if (pixel == 1) {
 				hasNonZeroPixel = true;
@@ -116,13 +116,13 @@ public class BitmapGenerator {
     }
     return ret;
 }
-public static String getBitmap(String text, String fontFile, int size) {
+public static String getBitmap(String text, String fontFile, int width,int hight) {
     
     	String fontFilePath= getFontPath(fontFile);
 	String ret="";
 	try {
 	    // Load font from file
-	 Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontFilePath)).deriveFont(Font.PLAIN, size);
+	 Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontFilePath)).deriveFont(Font.PLAIN, hight);
 
 	// Create a dummy image to calculate text dimensions
 	BufferedImage dummyImage = new BufferedImage(1, 1, BufferedImage.TYPE_BYTE_BINARY);
@@ -133,8 +133,8 @@ public static String getBitmap(String text, String fontFile, int size) {
 	int textHeight = metrics.getHeight();
 
 	// Force width to 8 pixels per character and height to 16 pixels
-	int bitmapWidth = Math.max(8, textWidth);
-	int bitmapHeight = Math.max(16, textHeight);
+	int bitmapWidth = Math.max(width, textWidth);
+	int bitmapHeight = Math.max(hight, textHeight);
 
 	// Scale down the font if text height is too large
 	if (textHeight > bitmapHeight) {
@@ -159,7 +159,7 @@ public static String getBitmap(String text, String fontFile, int size) {
 		for (int x = 0; x < bitmapWidth; x++) {
 			int pixel = image.getRGB(x, y) == -16777216 ? 0 : 1; 
 			// Black = 0, White = 1
-			rowPrint.append(pixel == 1 ? "1" : "0"); 
+			rowPrint.append(pixel == 1 ? "#" : "."); 
 			if (pixel == 1) {
 				hasNonZeroPixel = true;
 			}
@@ -179,7 +179,7 @@ public static String getBitmap(String text, String fontFile, int size) {
 }
 
 public static void main(String[] args) {
-        if (args.length < 3) {
+        if (args.length < 4) {
             System.out.println("Usage: java BitmapGenerator <text> <fontFile> <size>");
             return;
         }
@@ -187,9 +187,12 @@ public static void main(String[] args) {
         String fontFil = args[1];
         int size=14;
 	size = Integer.parseInt(args[2]);
-
-        String base64Encoded=generateBitmapBase64Json(text, fontFil, size);
-        String bitMap=getBitmap(text, fontFil, size);
+	int higt=16;
+	higt = Integer.parseInt(args[3]);
+	
+        String base64Encoded=generateBitmapBase64Json(text, fontFil, size,higt);
+        String bitMap=getBitmap(text, fontFil, size,higt);
+        System.out.println(base64Encoded);
         System.out.println(bitMap);
         
     }
