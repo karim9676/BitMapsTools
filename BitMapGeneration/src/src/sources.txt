@@ -1,0 +1,4 @@
+./BitmapHandling/BitmapGenerator.java
+./JsonParsing/RouteParser.java
+./RequestHandling/MainIntegration.java
+./ZipHandling/CreateZip.java
