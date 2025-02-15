@@ -149,15 +149,9 @@ public class BitmapGenerator {
 		// 5. Create the final image.
 		BufferedImage image = new BufferedImage(bitmapWidth, bitmapHeight, BufferedImage.TYPE_BYTE_BINARY);
 		Graphics2D graphics = image.createGraphics();
-	
-        // Fill background (optional; for example, white)
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(0, 0, bitmapWidth, bitmapHeight);
-        // Set font and draw text (using black for the text)
-        graphics.setFont(font);
-        graphics.setColor(Color.BLACK);
-        graphics.drawString(text, 0, metrics.getAscent());
-        
+		graphics.setFont(font);
+		graphics.drawString(text, 0, metrics.getAscent());
+
 		// Prepare to generate bitmap data row by row.
 		int linesAdded =0;
 		for (int y = 0; y < bitmapHeight; y++) {
@@ -198,6 +192,8 @@ public class BitmapGenerator {
 					String baseRow64Encoded = Base64.getEncoder().encodeToString(byteArray);
 					jsonArray.put(baseRow64Encoded);
 					linesAdded++;
+					
+										
 				}
 			}
 			//System.out.println(rowBitMapData);	
@@ -213,6 +209,8 @@ public class BitmapGenerator {
 		}
     	return base64Encoded;
 	}
+	
+	
 	public static void main(String[] args) {
 		if (args.length < 4) {
 			System.out.println("Usage: java BitmapGenerator <text> <fontFile> <initialFontSize> <desiredHeight>");
@@ -228,8 +226,10 @@ public class BitmapGenerator {
 		System.out.println("\nJSON Output:");
 		System.out.println(jsonOutput);
 		
+		
+		
 		String bitMap=getBitmap(text, fontFile, initialFontSize,desiredHeight);
-        System.out.println(bitMap);
+        	System.out.println(bitMap);
 	}
 }
 
