@@ -32,7 +32,7 @@ public class BitmapGenerator {
      * 5. Create an image with width = (boundingBoxWidth + 2*margin) and height = desiredHeight.
      * 6. Draw the text at an offset that aligns the bounding box into the image.
      */
-    private static BufferedImage createTextImage(String text, String fontFile, int initialFontSize, int desiredHeight)
+    private static BufferedImage createTextImage(String text, String fontFile, int initialFontSize, int desiredHeight,int margin,double scaleFactor,double horizontalScaleFactor)
             throws IOException, FontFormatException {
         String fontFilePath = getFontPath(fontFile);
         // Load the base font
@@ -51,15 +51,15 @@ public class BitmapGenerator {
         double textBoundHeight = bounds.getHeight();
 
         // Use a small margin (so text does not touch image borders)
-        int margin = 2;
+       
         // Compute vertical scaling factor so that the scaled bounding box fits the available height.
         double verticalScaleFactor = (desiredHeight - 2.0 * margin) / textBoundHeight;
         Font scaledFont = baseFont.deriveFont((float) (baseFont.getSize2D() * verticalScaleFactor));
 
         // Optionally apply horizontal scaling.
-        double horizontalScaleFactor = 1.5; // Adjust this factor to widen each character
+        //double horizontalScaleFactor = 1.5; // Adjust this factor to widen each character
         AffineTransform at = new AffineTransform();
-        at.scale(horizontalScaleFactor, 1.0);
+        at.scale(horizontalScaleFactor, scaleFactor);
         Font finalFont = scaledFont.deriveFont(at);
 
         // Recompute text layout and its bounds using the final font.
@@ -99,9 +99,9 @@ public class BitmapGenerator {
         return image;
     }
 
-    public static String getBitmap(String text, String fontFile, int initialFontSize, int desiredHeight) {
+    public static String getBitmap(String text, String fontFile, int initialFontSize, int desiredHeight,int margin,double scaleFactor,double horizontalScaleFactor) {
         try {
-            BufferedImage image = createTextImage(text, fontFile, initialFontSize, desiredHeight);
+            BufferedImage image = createTextImage(text, fontFile, initialFontSize, desiredHeight,margin,scaleFactor,horizontalScaleFactor);
             int width = image.getWidth();
             int height = image.getHeight();
             StringBuilder printedBitmap = new StringBuilder();
@@ -133,11 +133,11 @@ public class BitmapGenerator {
         }
     }
 
-    public static String generateBitmapToHeader(String text, String fontFile, int initialFontSize, int desiredHeight) {
+    public static String generateBitmapToHeader(String text, String fontFile, int initialFontSize, int desiredHeight,int margin,double scaleFactor,double horizontalScaleFactor) {
         JSONArray jsonArray = new JSONArray();
         int linesAdded = 0;
         try {
-            BufferedImage image = createTextImage(text, fontFile, initialFontSize, desiredHeight);
+             BufferedImage image = createTextImage(text, fontFile, initialFontSize, desiredHeight,margin,scaleFactor,horizontalScaleFactor);
             int width = image.getWidth();
             int height = image.getHeight();
 
@@ -195,20 +195,30 @@ public class BitmapGenerator {
 
         String text = args[0];
         String fontFile = args[1];
-        int initialFontSize = 1;
-        //int initialFontSize = Integer.parseInt(args[2]);
-        int desiredHeight = Integer.parseInt(args[2]);
-        if(desiredHeight == 16)
+        //int initialFontSize = 1;
+        int initialFontSize = Integer.parseInt(args[2]);
+        int desiredHeight = Integer.parseInt(args[3]);
+        int margin=2;
+        margin = Integer.parseInt(args[4]);
+       
+        // Parse a double value from the 5th command line argument
+        double scaleFactor = 1.0;
+        scaleFactor = Double.parseDouble(args[5]);
+        double horizontalScaleFactor = 1.5;
+        horizontalScaleFactor= Double.parseDouble(args[6]);
+        
+        
+       /* if(desiredHeight == 16)
         	desiredHeight=20;
 	else if(desiredHeight == 8) {
 		initialFontSize=2;
         	desiredHeight=12;
-        } 	
-        String bitmapOutput = getBitmap(text, fontFile, initialFontSize, desiredHeight);
+        }*/ 	
+        String bitmapOutput = getBitmap(text, fontFile, initialFontSize, desiredHeight,margin,scaleFactor,horizontalScaleFactor);
         System.out.println("Bitmap Representation:");
         System.out.println(bitmapOutput);
 
-        String jsonOutput = generateBitmapToHeader(text, fontFile, initialFontSize, desiredHeight);
+        String jsonOutput = generateBitmapToHeader(text, fontFile, initialFontSize, desiredHeight,margin,scaleFactor,horizontalScaleFactor);
         System.out.println("JSON Output:");
         System.out.println(jsonOutput);
     }
