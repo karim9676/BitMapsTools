@@ -1,0 +1,96 @@
+[
+   {
+      "id":35,
+      "route":{
+         "routeNumber":"771",
+         "source":"ATTAPUR",
+         "destination":"Gachibowli",
+         "via":"TOLICHOWKI MEHDIPATNAM SHAIKPET RAIDURG",
+         "splitRoute":false,
+         "routeNumber1":"",
+         "routeNumber2":"",
+         "separation":"-",
+         "specialMessage":false
+      },
+      "displayConfig":{
+         "en":{
+            "front":{
+               "format":"single",
+               "texts":{
+                  "text":{
+                     "text":"ATTAPUR ",
+                     "bitmap":{
+                        "bitmap":"771 ATTAPUR - GACHIBOWLI VIA: TOLICHOWKI MEHDIPATNAM SHAIKPET RAIDURG",
+                        "width":0,
+                        "height":0
+                     },
+                     "scrollType":"Fixed",
+                     "position":"Left",
+                     "scrollSpeed":1,
+                     "fontSize":16,
+                     "fontWeight":"font-regular",
+                     "fontHeight":23,
+                     "x_offset":0,
+                     "y_offset":-1,
+                     "spacing":1
+                  }
+               }
+            }
+         },
+         "hi":{
+            "front":{
+               "format":"single",
+               "texts":{
+                  "text":{
+                     "text":"रैदुर्ग",
+                     "bitmap":{
+                        "bitmap":"७७१ अट्टापुर - गच्चीबौली वाया: तोलीचौकी मेहड़ीपटनम शैकपेट रैदुर्ग",
+                        "width":0,
+                        "height":0
+                     },
+                     "scrollType":"Fixed",
+                     "position":"Left",
+                     "scrollSpeed":1,
+                     "fontSize":16,
+                     "fontWeight":"font-regular",
+                     "fontHeight":12,
+                     "x_offset":2,
+                     "y_offset":-2,
+                     "spacing":1
+                  }
+               }
+            }
+         },
+         "te":{
+            "front":{
+               "format":"single",
+               "texts":{
+                  "text":{
+                     "text":"రైదుర్గ్",
+                     "bitmap":{
+                        "bitmap":"౭౭౧ అత్తాపూర్ - గచ్చిబౌలి వయ: టోలిచౌకి మెహదీపట్నం శైక్పేట్ రైదుర్గ్",
+                        "width":0,
+                        "height":0
+                     },
+                     "scrollType":"Fixed",
+                     "position":"Left",
+                     "scrollSpeed":1,
+                     "fontSize":16,
+                     "fontWeight":"font-bold",
+                     "fontHeight":12,
+                     "x_offset":0,
+                     "y_offset":3,
+                     "spacing":1
+                  }
+               }
+            }
+         }
+      },
+      "version":"1.0",
+      "areaId":"WZA0PKFIDT",
+      "depotId":"LSWF4GGDJW",
+      "active":true,
+      "deleted":false,
+      "createdAt":"2025-02-18 07:12:49.41"
+   }
+]
