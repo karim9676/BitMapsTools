@@ -106,7 +106,7 @@ public class RouteParser {
 		try {
 		    List<String> commandList = new ArrayList<>();
 		    commandList.add("python3");
-		    commandList.add("bit.py");
+		    commandList.add("bitmap_gen.py");
 		    commandList.add(params.text);
 		    commandList.add("-f");
 		    commandList.add(params.fontPath);
@@ -555,12 +555,12 @@ public class RouteParser {
             System.out.println("JSON ERROR");
             e.printStackTrace();
         }
-        String baseFolder = "../" + args[1];
+        String baseFolder = args[1];
         
         String zipFilePath = args[2];
         if (!jsonString.isEmpty()) {
             ParseBitMapJson(jsonString, baseFolder);
-            HandleZip(baseFolder, zipFilePath);
+            //HandleZip(baseFolder, zipFilePath);
         }
     }
 }
