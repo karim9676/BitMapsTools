@@ -131,16 +131,29 @@ public class RouteParser {
 			}
 		    String[] command = commandList.toArray(new String[0]);
 		    
-		    // Print the full command for debugging
-		    String commandString = String.join(" ", command);
-		    System.out.println("Executing command: " + commandString);
+		  // Print the full command for debugging
+		  //  String commandString = String.join(" ", command);
+		  //  System.out.println("Executing command: " + commandString);
+
+
+
+		StringBuilder commandString = new StringBuilder();
+		for (String arg : command) {
+			if (arg.contains(" ")) {
+				commandString.append("\"").append(arg).append("\"");
+			} else {
+				commandString.append(arg);
+			}
+				commandString.append(" ");
+		}
+		System.out.println("Executing command: " + commandString.toString().trim());
+
 
 		    Process process = Runtime.getRuntime().exec(command);
 
 		    // Capture standard output
 		    StringBuilder outputBuilder = new StringBuilder();
-		    BufferedReader reader = new BufferedReader(
-		        new InputStreamReader(process.getInputStream()));
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		    String line;
 		    while ((line = reader.readLine()) != null) {
 		        outputBuilder.append(line).append("\n");
@@ -174,7 +187,7 @@ public class RouteParser {
     public static void saveBitmap(JsonNode textData, String language, String screenType, 
                                   String basePath, String routeNumber, String fileName, boolean splitRoute) {
             String text = textData.get("text").asText();
-        
+            	
              
             if (text.isBlank()) 
             	return;
