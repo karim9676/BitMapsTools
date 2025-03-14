@@ -244,6 +244,61 @@ public class RouteParser {
 			}
 			
 
+    
+    }
+    
+    
+    public static String getBitMapSimulation(JsonNode textData, String language) 
+    {
+    
+		String text = textData.get("text").asText();
+		if (text.isBlank()) 
+			return text;
+	   		
+		String fontFile= getFontPath(language);
+		System.out.println("fontFile        : " + fontFile);
+		System.out.println("lg        	: " + language);
+
+		// Construct the full file path: basePath/routeNumber/fileName
+		String fullFilePath="";
+		ScriptParams params = new ScriptParams(text, fontFile);
+			// Update parameters from JSON if they exist
+		if (textData.has("fontSize")) {
+			params.size = textData.get("fontHeight").asInt();
+			System.out.println("size      : " + params.size);
+		}
+		if (textData.has("x_offset")) {
+			params.offsetX = textData.get("x_offset").asInt();
+		}
+		if (textData.has("y_offset")) {
+			params.offsetY = textData.get("y_offset").asInt();
+			System.out.println("y_offset      : " + params.offsetY);
+		}
+		if (textData.has("spacing")) {
+			params.spacing = textData.get("spacing").asInt();
+		}
+		if (textData.has("fontHeight")) {
+			params.imgHeight = textData.get("fontSize").asInt();
+			System.out.println("imgHeight      : " + params.imgHeight);
+		}
+		if (textData.has("fontWeight")) {
+			String fontWeight = textData.get("fontWeight").asText();
+			params.style = fontWeight.replace("font-", ""); // Convert "font-regular" to "regular"
+		}
+		ScriptResult result = runPythonScript(params);
+
+		// Use the captured output
+		String scriptOutput = result.getOutput();
+		String scriptErrors = result.getErrorOutput();
+
+		if (result.getExitCode() == 0) {
+			System.out.println("Script output:\n" + scriptOutput);
+			return scriptOutput;
+		} else {
+			System.out.println("Script failed with errors:\n" + scriptErrors);
+			return scriptErrors;
+		}
+    
     }
     public static String getBitmap(JsonNode textData, String language, String screenType, boolean splitRoute) {
     
