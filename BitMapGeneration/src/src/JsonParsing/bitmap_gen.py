@@ -182,7 +182,7 @@ def main():
         for y in range(img.height):
             row = ""
             for x in range(img_width):
-                row += "1" if img.getpixel((x, y)) != 0 else "0"
+                row += "#" if img.getpixel((x, y)) != 0 else "."
             print(row)
      #   print(f"\nFont: {font_path}, Size: {font_size}px, Style: {args.style}")
      #   print(f"Image width: {img_width}px, Image height: {img_height}px")
