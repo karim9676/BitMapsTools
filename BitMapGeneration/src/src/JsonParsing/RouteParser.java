@@ -133,7 +133,7 @@ public class RouteParser {
 		    
 		  // Print the full command for debugging
 		  //  String commandString = String.join(" ", command);
-		  //  System.out.println("Executing command: " + commandString);
+		  //  //System.out.println("Executing command: " + commandString);
 
 
 
@@ -146,7 +146,7 @@ public class RouteParser {
 			}
 				commandString.append(" ");
 		}
-		System.out.println("Executing command: " + commandString.toString().trim());
+		//System.out.println("Executing command: " + commandString.toString().trim());
 
 
 		    Process process = Runtime.getRuntime().exec(command);
@@ -157,7 +157,7 @@ public class RouteParser {
 		    String line;
 		    while ((line = reader.readLine()) != null) {
 		        outputBuilder.append(line).append("\n");
-		        System.out.println("Output: " + line); // Optional: keep printing if desired
+		        //System.out.println("Output: " + line); // Optional: keep printing if desired
 		    }
 
 		    // Capture error output
@@ -170,7 +170,7 @@ public class RouteParser {
 		    }
 
 		    int exitCode = process.waitFor();
-		    System.out.println("Process exited with code: " + exitCode);
+		    //System.out.println("Process exited with code: " + exitCode);
 
 		    return new ScriptResult(exitCode, outputBuilder.toString(), errorBuilder.toString());
 
@@ -196,39 +196,39 @@ public class RouteParser {
             String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
             fontFile= getFontPath(ftlg);
             
-            System.out.println("fontFile        : " + fontFile);
-            System.out.println("lg        	: " + language);
-            System.out.println("screenType      : " + screenType);
-	    System.out.println("fileName      : " + fileName);
+            //System.out.println("fontFile        : " + fontFile);
+            //System.out.println("lg        	: " + language);
+            //System.out.println("screenType      : " + screenType);
+	    //System.out.println("fileName      : " + fileName);
 			
            /* if(screenType.equals("0")) {
                 language="en";
                 fontFile= getFontPath(language);
-                System.out.println("for route number fontFile        : " + fontFile);
+                //System.out.println("for route number fontFile        : " + fontFile);
             }*/
 			// Construct the full file path: basePath/routeNumber/fileName
 			String fullFilePath = Paths.get(basePath, routeNumber, fileName).toString();
-			System.out.println("Full output path: " + fullFilePath);
+			//System.out.println("Full output path: " + fullFilePath);
 			ScriptParams params = new ScriptParams(text, fontFile,fullFilePath);
 			
 				// Update parameters from JSON if they exist
 			if (textData.has("fontSize")) {
 				params.size = textData.get("fontHeight").asInt();
-				System.out.println("size      : " + params.size);
+				//System.out.println("size      : " + params.size);
 			}
 			if (textData.has("x_offset")) {
 				params.offsetX = textData.get("x_offset").asInt();
 			}
 			if (textData.has("y_offset")) {
 				params.offsetY = textData.get("y_offset").asInt();
-				System.out.println("y_offset      : " + params.offsetY);
+				//System.out.println("y_offset      : " + params.offsetY);
 			}
 			if (textData.has("spacing")) {
 				params.spacing = textData.get("spacing").asInt();
 			}
 			if (textData.has("fontHeight")) {
 				params.imgHeight = textData.get("fontSize").asInt();
-				System.out.println("imgHeight      : " + params.imgHeight);
+				//System.out.println("imgHeight      : " + params.imgHeight);
 			}
 			if (textData.has("fontWeight")) {
 				String fontWeight = textData.get("fontWeight").asText();
@@ -241,9 +241,9 @@ public class RouteParser {
 			String scriptErrors = result.getErrorOutput();
 
 			if (result.getExitCode() == 0) {
-				System.out.println("Script output:\n" + scriptOutput);
+				//System.out.println("Script output:\n" + scriptOutput);
 			} else {
-				System.out.println("Script failed with errors:\n" + scriptErrors);
+				//System.out.println("Script failed with errors:\n" + scriptErrors);
 			}
 			
 
@@ -263,8 +263,8 @@ public class RouteParser {
 		String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
 		fontFile= getFontPath(ftlg);
 
-		System.out.println("fontFile        : " + fontFile);
-		System.out.println("lg        	: " + language);
+		//System.out.println("fontFile        : " + fontFile);
+		//System.out.println("lg        	: " + language);
 
 		// Construct the full file path: basePath/routeNumber/fileName
 		String fullFilePath="";
@@ -272,21 +272,21 @@ public class RouteParser {
 			// Update parameters from JSON if they exist
 		if (textData.has("fontSize")) {
 			params.size = textData.get("fontHeight").asInt();
-			System.out.println("size      : " + params.size);
+			//System.out.println("size      : " + params.size);
 		}
 		if (textData.has("x_offset")) {
 			params.offsetX = textData.get("x_offset").asInt();
 		}
 		if (textData.has("y_offset")) {
 			params.offsetY = textData.get("y_offset").asInt();
-			System.out.println("y_offset      : " + params.offsetY);
+			//System.out.println("y_offset      : " + params.offsetY);
 		}
 		if (textData.has("spacing")) {
 			params.spacing = textData.get("spacing").asInt();
 		}
 		if (textData.has("fontHeight")) {
 			params.imgHeight = textData.get("fontSize").asInt();
-			System.out.println("imgHeight      : " + params.imgHeight);
+			//System.out.println("imgHeight      : " + params.imgHeight);
 		}
 		if (textData.has("fontWeight")) {
 			String fontWeight = textData.get("fontWeight").asText();
@@ -299,10 +299,10 @@ public class RouteParser {
 		String scriptErrors = result.getErrorOutput();
 
 		if (result.getExitCode() == 0) {
-			System.out.println("Script output:\n" + scriptOutput);
+			//System.out.println("Script output:\n" + scriptOutput);
 			return scriptOutput;
 		} else {
-			System.out.println("Script failed with errors:\n" + scriptErrors);
+			//System.out.println("Script failed with errors:\n" + scriptErrors);
 			return scriptErrors;
 		}
     
@@ -318,15 +318,15 @@ public class RouteParser {
             String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
             fontFile= getFontPath(ftlg);
             
-            System.out.println("fontFile        : " + fontFile);
-            System.out.println("lg        	: " + language);
-            System.out.println("screenType      : " + screenType);
+            //System.out.println("fontFile        : " + fontFile);
+            //System.out.println("lg        	: " + language);
+            //System.out.println("screenType      : " + screenType);
 			
 			
             if(screenType.equals("0")) {
                 language="en";
                 fontFile= getFontPath(language);
-                System.out.println("for route number fontFile        : " + fontFile);
+                //System.out.println("for route number fontFile        : " + fontFile);
             }
 			// Construct the full file path: basePath/routeNumber/fileName
 			String fullFilePath="";
@@ -334,21 +334,21 @@ public class RouteParser {
 				// Update parameters from JSON if they exist
 			if (textData.has("fontSize")) {
 				params.size = textData.get("fontHeight").asInt();
-				System.out.println("size      : " + params.size);
+				//System.out.println("size      : " + params.size);
 			}
 			if (textData.has("x_offset")) {
 				params.offsetX = textData.get("x_offset").asInt();
 			}
 			if (textData.has("y_offset")) {
 				params.offsetY = textData.get("y_offset").asInt();
-				System.out.println("y_offset      : " + params.offsetY);
+				//System.out.println("y_offset      : " + params.offsetY);
 			}
 			if (textData.has("spacing")) {
 				params.spacing = textData.get("spacing").asInt();
 			}
 			if (textData.has("fontHeight")) {
 				params.imgHeight = textData.get("fontSize").asInt();
-				System.out.println("imgHeight      : " + params.imgHeight);
+				//System.out.println("imgHeight      : " + params.imgHeight);
 			}
 			if (textData.has("fontWeight")) {
 				String fontWeight = textData.get("fontWeight").asText();
@@ -361,10 +361,10 @@ public class RouteParser {
 			String scriptErrors = result.getErrorOutput();
 
 			if (result.getExitCode() == 0) {
-				System.out.println("Script output:\n" + scriptOutput);
+				//System.out.println("Script output:\n" + scriptOutput);
 				return scriptOutput;
 			} else {
-				System.out.println("Script failed with errors:\n" + scriptErrors);
+				//System.out.println("Script failed with errors:\n" + scriptErrors);
 				return scriptErrors;
 			}
 		
@@ -609,10 +609,10 @@ public class RouteParser {
         Path zipFile = Paths.get(dstZipFile);
         boolean zipSuccess = zipFolder(sourceFolder, zipFile);
         if (zipSuccess) {
-            System.out.println("Folder zipped successfully!");
+            //System.out.println("Folder zipped successfully!");
             try {
                 deleteFolder(sourceFolder);
-                System.out.println("Source folder deleted successfully.");
+                //System.out.println("Source folder deleted successfully.");
             } catch (IOException e) {
                 System.err.println("Error occurred while deleting the folder: " + e.getMessage());
                 e.printStackTrace();
@@ -624,14 +624,14 @@ public class RouteParser {
 
     public static void main(String[] args) {
         String jsonFile = args[0];
-        System.out.println("Json file: " + args[0]);
+        //System.out.println("Json file: " + args[0]);
         String jsonString = "";
         try {
             jsonString = new String(Files.readAllBytes(Paths.get(jsonFile)), StandardCharsets.UTF_8);
-            System.out.println("JSON string from file: ");
-            System.out.println(jsonString);
+            //System.out.println("JSON string from file: ");
+            //System.out.println(jsonString);
         } catch (IOException e) {
-            System.out.println("JSON ERROR");
+            //System.out.println("JSON ERROR");
             e.printStackTrace();
         }
         String baseFolder = args[1];
