@@ -191,18 +191,21 @@ public class RouteParser {
              
             if (text.isBlank()) 
             	return;
-	   		
-            String fontFile= getFontPath(language);
+	   
+	    String fontFile=""; 		
+            String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
+            fontFile= getFontPath(ftlg);
+            
             System.out.println("fontFile        : " + fontFile);
             System.out.println("lg        	: " + language);
             System.out.println("screenType      : " + screenType);
-			System.out.println("fileName      : " + fileName);
+	    System.out.println("fileName      : " + fileName);
 			
-            if(screenType.equals("0")) {
+           /* if(screenType.equals("0")) {
                 language="en";
                 fontFile= getFontPath(language);
                 System.out.println("for route number fontFile        : " + fontFile);
-            }
+            }*/
 			// Construct the full file path: basePath/routeNumber/fileName
 			String fullFilePath = Paths.get(basePath, routeNumber, fileName).toString();
 			System.out.println("Full output path: " + fullFilePath);
@@ -255,7 +258,11 @@ public class RouteParser {
 		if (text.isBlank()) 
 			return text;
 	   		
-		String fontFile= getFontPath(language);
+		
+		String fontFile=""; 		
+		String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
+		fontFile= getFontPath(ftlg);
+
 		System.out.println("fontFile        : " + fontFile);
 		System.out.println("lg        	: " + language);
 
@@ -306,7 +313,11 @@ public class RouteParser {
             if (text.isBlank()) 
             	return text;
 	   		
-            String fontFile= getFontPath(language);
+            
+            String fontFile=""; 		
+            String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
+            fontFile= getFontPath(ftlg);
+            
             System.out.println("fontFile        : " + fontFile);
             System.out.println("lg        	: " + language);
             System.out.println("screenType      : " + screenType);
@@ -408,8 +419,8 @@ public class RouteParser {
         return "arial"; // Default font
     }
 
-    public static String getFontPath(String langCode) {
-        return "../fonts/" + getFontFileForLanguage(langCode) + ".ttf";
+    public static String getFontPath(String ff) {
+        return "../fonts/" +ff+ ".ttf";
     }
 
     public static JsonNode parseJson(String json) { 
