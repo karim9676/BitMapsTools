@@ -102,7 +102,7 @@ public class RouteParser {
             this.style = "regular";   // Default style
         }
     }
-	public static ScriptResult runPythonScript(ScriptParams params) {
+    public static ScriptResult runPythonScript(ScriptParams params) {
 		try {
 		    List<String> commandList = new ArrayList<>();
 		    commandList.add("python3");
@@ -180,6 +180,73 @@ public class RouteParser {
 		}
 	}
  
+	public static ScriptResult runPythonScriptSimulation(ScriptParams params) {
+		try {
+		    List<String> commandList = new ArrayList<>();
+		    commandList.add("python3");
+		    commandList.add("bitmap_gen.py");
+		    commandList.add(params.text);
+		    commandList.add("-f");
+		    commandList.add(params.fontPath);
+		    commandList.add("-s");
+		    commandList.add(String.valueOf(params.size));
+		    commandList.add("--offset-x");
+		    commandList.add(String.valueOf(params.offsetX));
+		    commandList.add("--offset-y");
+		    commandList.add(String.valueOf(params.offsetY));
+		    commandList.add("--spacing");
+		    commandList.add(String.valueOf(params.spacing));
+		    if (params.printOutput) {
+		        commandList.add("--print");
+		    }
+		    commandList.add("--img-height");
+		    commandList.add(String.valueOf(params.imgHeight));
+		    commandList.add("--style");
+		    commandList.add(params.style);
+		    String[] command = commandList.toArray(new String[0]);
+		    
+		
+
+			StringBuilder commandString = new StringBuilder();
+			for (String arg : command) {
+				if (arg.contains(" ")) {
+					commandString.append("\"").append(arg).append("\"");
+				} else {
+					commandString.append(arg);
+				}
+					commandString.append(" ");
+			}
+		    Process process = Runtime.getRuntime().exec(command);
+
+		    // Capture standard output
+		    StringBuilder outputBuilder = new StringBuilder();
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		    String line;
+		    while ((line = reader.readLine()) != null) {
+		        outputBuilder.append(line).append("\n");
+		        //System.out.println("Output: " + line); // Optional: keep printing if desired
+		    }
+
+		    // Capture error output
+		    StringBuilder errorBuilder = new StringBuilder();
+		    BufferedReader errorReader = new BufferedReader(
+		        new InputStreamReader(process.getErrorStream()));
+		    while ((line = errorReader.readLine()) != null) {
+		        errorBuilder.append(line).append("\n");
+		        System.err.println("Error: " + line); // Optional: keep printing if desired
+		    }
+
+		    int exitCode = process.waitFor();
+		    
+		    return new ScriptResult(exitCode, outputBuilder.toString(), errorBuilder.toString());
+
+		} catch (IOException | InterruptedException e) {
+		    e.printStackTrace();
+		    return new ScriptResult(-1, "", e.getMessage());
+		}
+	}
+ 
+
 
     /**
      * Saves the bitmap with configuration from font_config, supporting en_16bit and en_8bit.
@@ -192,20 +259,10 @@ public class RouteParser {
             if (text.isBlank()) 
             	return;
 	   
-	    String fontFile=""; 		
+	    	String fontFile=""; 		
             String ftlg = textData.get("fontfile").asText();  //getFontPath(language);
             fontFile= getFontPath(ftlg);
-            
-            //System.out.println("fontFile        : " + fontFile);
-            //System.out.println("lg        	: " + language);
-            //System.out.println("screenType      : " + screenType);
-	    //System.out.println("fileName      : " + fileName);
-			
-           /* if(screenType.equals("0")) {
-                language="en";
-                fontFile= getFontPath(language);
-                //System.out.println("for route number fontFile        : " + fontFile);
-            }*/
+           
 			// Construct the full file path: basePath/routeNumber/fileName
 			String fullFilePath = Paths.get(basePath, routeNumber, fileName).toString();
 			//System.out.println("Full output path: " + fullFilePath);
@@ -292,7 +349,7 @@ public class RouteParser {
 			String fontWeight = textData.get("fontWeight").asText();
 			params.style = fontWeight.replace("font-", ""); // Convert "font-regular" to "regular"
 		}
-		ScriptResult result = runPythonScript(params);
+		ScriptResult result = runPythonScriptSimulation(params);
 
 		// Use the captured output
 		String scriptOutput = result.getOutput();
@@ -609,7 +666,7 @@ public class RouteParser {
         Path zipFile = Paths.get(dstZipFile);
         boolean zipSuccess = zipFolder(sourceFolder, zipFile);
         if (zipSuccess) {
-            //System.out.println("Folder zipped successfully!");
+            System.out.println("Folder zipped successfully!");
             try {
                 deleteFolder(sourceFolder);
                 //System.out.println("Source folder deleted successfully.");
@@ -639,7 +696,7 @@ public class RouteParser {
         String zipFilePath = args[2];
         if (!jsonString.isEmpty()) {
             ParseBitMapJson(jsonString, baseFolder);
-            //HandleZip(baseFolder, zipFilePath);
+            HandleZip(baseFolder, zipFilePath);
         }
     }
 }
